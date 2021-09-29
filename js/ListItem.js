@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 /**
  * @property taskValue {string}
@@ -31,6 +31,6 @@ export class ListItem {
    * @returns {string}
    */
   toString() {
-    return JSON.stringify({taskValue:this.taskValue,isDone:this.isDone});
+    return JSON.stringify({ taskValue: this.taskValue, isDone: this.isDone });
   }
 }

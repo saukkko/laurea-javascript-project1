@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 import { List } from "./List.js";
 import { ListItem } from "./ListItem.js";
 

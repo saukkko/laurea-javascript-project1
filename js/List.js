@@ -1,3 +1,4 @@
+"use strict";
 import { ListItem } from "./ListItem.js";
 
 export class List {
@@ -29,7 +30,7 @@ export class List {
    * @param {number} index
    * @param {ListItem} newValue
    */
-  setItem(index,newValue) {
+  setItem(index, newValue) {
     this.list[index] = newValue;
   }
 
@@ -39,10 +40,10 @@ export class List {
   toggleDone(index) {
     /** @type {ListItem} */
     const item = this.list[index];
-    this.setItem(index,{
+    this.setItem(index, {
       taskValue: item.taskValue,
-      isDone: !item.isDone
-    })
+      isDone: !item.isDone,
+    });
   }
 
   /**
@@ -58,5 +59,4 @@ export class List {
   toString() {
     return JSON.stringify(this.list);
   }
-
 }

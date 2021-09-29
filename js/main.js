@@ -1,8 +1,8 @@
-"use strict"
+"use strict";
 import { Row } from "./Row.js";
 import { LocalStorage } from "./LocalStorage.js";
 import { ListItem } from "./ListItem.js";
-import {exportToJSON, importFromJSON} from "./ImportExport.js";
+import { exportToJSON, importFromJSON } from "./ImportExport.js";
 
 // Global variable that keeps track if input is valid
 let isValidInput = false;
@@ -79,13 +79,13 @@ const renderTaskList = () => {
 const updateCounter = () => {
   const list = storage.list.toJSON();
   const count = list.length;
-  let doneCount=0;
+  let doneCount = 0;
 
-  list.forEach((d)=>{
+  list.forEach((d) => {
     if (d.isDone) doneCount++;
   });
 
-  const counter = document.getElementById("task-counter")
+  const counter = document.getElementById("task-counter");
   counter.innerHTML = `Total tasks: ${count}<br />Tasks done: ${doneCount}`;
 };
 
@@ -114,9 +114,9 @@ const validateInput = (element) => {
   ];
 
   setValidInput(true);
-  patterns.forEach((obj) => {
-    if (element.value.match(obj.regex)) {
-      showError(obj.errorMsg);
+  patterns.forEach((p) => {
+    if (element.value.match(p.regex)) {
+      showError(p.errorMsg);
       setValidInput(false);
     }
   });
@@ -190,8 +190,6 @@ const handleClick = (evt) => {
   }
 };
 
-
-
 /**
  * Adds new row to the list
  * @param {string} val value to add
@@ -237,21 +235,19 @@ const deleteRow = (index) => {
  * @param {number} index index to toggle done
  */
 const toggleDone = (index) => {
-  storage.markDone(index)
+  storage.markDone(index);
   setList();
 };
-
 
 /**
  * TODO: This function seems really weird, is it entirely necessary?
  * Saves the the list into localstorage
  */
 const setList = () => {
-  storage.updateStorage()
+  storage.updateStorage();
   setValidInput(false);
   renderTaskList();
 };
-
 
 /**
  * TODO: Make prettier
@@ -276,14 +272,12 @@ const hideError = () => {
   err.removeAttribute("class");
 };
 
-
 const init = () => {
   renderTaskInput();
   renderTaskList();
   updateCounter();
-}
+};
 window.onload = init;
-
 
 /*
 TODO:
@@ -292,11 +286,10 @@ TODO:
 */
 
 /** @type {HTMLAnchorElement} */
-const exportLink = document.getElementById("export")
+const exportLink = document.getElementById("export");
 
 exportLink.onclick = exportToJSON;
 
 /** @type {HTMLAnchorElement} */
 const importLink = document.getElementById("import");
 importLink.onclick = importFromJSON;
-

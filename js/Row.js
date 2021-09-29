@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 /**
  * @class Row
@@ -50,7 +50,7 @@ export class Row {
     this.li.appendChild(doneIcon);
     this.li.appendChild(task);
     this.li.appendChild(deleteIcon);
-  };
+  }
 
   /**
    * Creates child elements for parent `<li>` element. This is the actual row contents.
@@ -72,9 +72,9 @@ export class Row {
     }
 
     return { doneIcon, task, deleteIcon };
-  };
+  }
 
-  getMaterialIcon(iconName, index)  {
+  getMaterialIcon(iconName, index) {
     const icon = document.createElement("span");
     icon.className = "material-icons";
     icon.innerText = iconName;
@@ -83,5 +83,5 @@ export class Row {
     if (typeof index === "number") icon.dataset.key = index;
 
     return icon;
-  };
+  }
 }

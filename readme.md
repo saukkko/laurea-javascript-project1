@@ -1,7 +1,9 @@
 # JavaScript project #1 - TO00BL79-3004
 
 ## Todo
+
 General:
+
 - Add comments (JSDoc)
 - Try to shorten main.js and isolate stuff into their own modules
 - Finish this readme
@@ -14,9 +16,12 @@ General:
 - Test every scenario and everything. Twice.
 
 Features:
+
 - Give user the option to give task-list custom name
 - Make the site mobile friendly
 - Add option to reset everything
+- Add option to clear tasks that are done.
 
 ## What needs fixing
+
 - Validate input from import
