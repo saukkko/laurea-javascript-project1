@@ -1,0 +1,130 @@
+/* page general styling */
+
+body {
+  font-family: Roboto, sans-serif;
+  background-color: wheat;
+  font-size: 16px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+}
+
+#root {
+  margin: auto;
+  padding: 1em;
+  width: 480px;
+}
+
+#list-root {
+  background-color: beige;
+  padding: 1em;
+  border: 1px solid gray;
+  border-radius: 1em;
+  margin: 5px 0px;
+}
+#import-export {
+  float: left;
+}
+
+/* input styling */
+
+div#input {
+  display: flex;
+}
+div#input > input {
+  flex: 10;
+}
+div#input > span {
+  flex: 2;
+}
+
+input {
+  font-size: 24px;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+/* input:focus {
+  background-color: lightblue;
+} */
+
+#add-button {
+  width: 40px;
+  height: 40px;
+  padding: 0px;
+}
+
+/* task list styling */
+
+ul {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 8px;
+  border: 2px solid gray;
+  border-radius: 5px;
+}
+
+li {
+  display: flex;
+  flex: 6;
+  list-style-type: none;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+}
+li:first-of-type {
+  border-top-style: unset;
+  border-top-color: unset;
+}
+li:last-of-type {
+  border-bottom-style: unset;
+  border-bottom: unset;
+}
+
+.task {
+  flex: 10;
+  font-size: 1.5em;
+  padding-left: 1em;
+}
+
+/* icon styling */
+
+.material-icons {
+  font-size: 30px;
+  flex: 1;
+  cursor: pointer;
+  opacity: 0.3;
+}
+
+.material-icons:hover {
+  opacity: 1;
+}
+
+.material-icons[data-event="add"] {
+  font-size: 36px;
+}
+/*
+.material-icons[data-event="done"] {
+}
+*/
+.material-icons[data-event="delete"] {
+  color: red;
+}
+
+/* error box */
+
+.error-box {
+  margin-top: 8px;
+  padding: 1em;
+  background-color: red;
+  opacity: 0.9;
+  border-radius: 5px;
+  border: 2px solid black;
+  animation: fadeout 2s ease-out;
+  animation-delay: 2s;
+}
