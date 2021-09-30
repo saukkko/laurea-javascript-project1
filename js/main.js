@@ -1,37 +1,15 @@
 "use strict";
-import { Row } from "./Row.js";
 import { LocalStorage } from "./LocalStorage.js";
-import { ListItem } from "./ListItem.js";
+import { Row } from "./Row.js";
 import { exportToJSON, importFromJSON } from "./ImportExport.js";
+import {
+  handleClick,
+  handleInputChange,
+  handleInputKeydown,
+} from "./EventHandlers.js";
 
-// Global variable that keeps track if input is valid
-let isValidInput = false;
-let storage = new LocalStorage();
-
-/**
- * Function for controlling input validity
- * @param {boolean} value
- */
-const setValidInput = (value) => {
-  isValidInput = value;
-};
-
-/**
- * Returns `<span>` element with desired
- * @param {string} iconName material icon name eg. "add"
- * @param {number?} index (optional) creates data-key attribute with value of index
- * @returns for example, `<span class="material-icons" data-event="add">add</span>`
- */
-const getMaterialIcon = (iconName, index) => {
-  const icon = document.createElement("span");
-  icon.className = "material-icons";
-  icon.innerText = iconName;
-  icon.onclick = handleClick;
-  icon.dataset.event = iconName;
-  if (typeof index === "number") icon.dataset.key = index;
-
-  return icon;
-};
+export const storage = new LocalStorage();
+export var isValidInput = false;
 
 /**
  * Creates input and button elements for inserting tasks
@@ -40,7 +18,7 @@ const renderTaskInput = () => {
   const div = document.getElementById("input");
   const input = document.createElement("input");
   const button = document.createElement("button");
-  const addIcon = getMaterialIcon("add");
+  const addIcon = Row.getMaterialIcon("add", null, handleClick);
 
   input.required = true;
   input.type = "text";
@@ -59,7 +37,7 @@ const renderTaskInput = () => {
 /**
  * Creates the todo list `<li>`-elements and their children
  */
-const renderTaskList = () => {
+export const renderTaskList = () => {
   // find the #list (ul element)
   /** @type {HTMLUListElement} */
   const ul = document.getElementById("list");
@@ -93,7 +71,7 @@ const updateCounter = () => {
  * Function to check if the input is valid
  * @param {HTMLInputElement} element
  */
-const validateInput = (element) => {
+export const validateInput = (element) => {
   const patterns = [
     {
       regex: /^$/,
@@ -132,124 +110,6 @@ const validateInput = (element) => {
 };
 
 /**
- * onkeydown event handler to accept enter button as send
- * @param {KeyboardEvent} evt
- */
-const handleInputKeydown = (evt) => {
-  if (evt.key === "Enter") {
-    const target = evt.target;
-
-    addRow(target.value);
-    target.value = "";
-  }
-};
-
-/**
- * oninput event handler to prevent adding unwanted input
- * @param {Event} evt
- */
-const handleInputChange = (evt) => {
-  const target = evt.target;
-
-  if (target.value.length > 20) {
-    target.value = target.value.slice(0, 20);
-  }
-  // validateInput(target);
-};
-
-/**
- * onclick event handler that reads event type from data-event attribute
- * @param {Event} evt
- */
-const handleClick = (evt) => {
-  const dataset = evt.target.dataset;
-
-  switch (dataset.event) {
-    case "delete":
-      deleteRow(dataset.key);
-      break;
-
-    case "add":
-      const input = document.getElementById("task-input");
-      addRow(input.value);
-      input.value = "";
-      break;
-
-    case "done":
-      //storage.done(dataset.key)
-      toggleDone(dataset.key);
-      break;
-
-    case "remove_done":
-      //storage.done(dataset.key)
-      toggleDone(dataset.key);
-      break;
-
-    default:
-      break;
-  }
-};
-
-/**
- * Adds new row to the list
- * @param {string} val value to add
- */
-const addRow = (val) => {
-  const input = document.getElementById("task-input");
-  validateInput(input);
-
-  if (val !== input.value) {
-    showError("input value mismatch");
-    return;
-  }
-  if (!isValidInput) {
-    return;
-  }
-
-  /*
-  if (!list) {
-    createList(val);
-  } else {
-    list.push({ value: val, done: false });
-    storage.add(new ListItem(val, false));
-    setList(list);
-  }
-  */
-  storage.add(new ListItem(val, false));
-  renderTaskList();
-};
-
-/**
- * TODO: Remove redundancy.
- * Deletes row with specified index
- * @param {number} index index to remove
- */
-const deleteRow = (index) => {
-  storage.remove(index);
-  setList();
-};
-
-/**
- * TODO: Redundancy
- * Sets tasks as done or unsets it.
- * @param {number} index index to toggle done
- */
-const toggleDone = (index) => {
-  storage.markDone(index);
-  setList();
-};
-
-/**
- * TODO: This function seems really weird, is it entirely necessary?
- * Saves the the list into localstorage
- */
-const setList = () => {
-  storage.updateStorage();
-  setValidInput(false);
-  renderTaskList();
-};
-
-/**
  * TODO: Make prettier
  * Shows red error box if user tries to add invalid input
  * @param {string} msg error message to print
@@ -272,24 +132,22 @@ const hideError = () => {
   err.removeAttribute("class");
 };
 
+/**
+ * Function for controlling input validity
+ * @param {boolean} value
+ */
+const setValidInput = (value) => {
+  isValidInput = value;
+};
+
 const init = () => {
   renderTaskInput();
   renderTaskList();
   updateCounter();
+
+  const exportLink = document.getElementById("export");
+  const importLink = document.getElementById("import");
+  exportLink.onclick = exportToJSON;
+  importLink.onclick = importFromJSON;
 };
 window.onload = init;
-
-/*
-TODO:
-  - isolate in their own methods
-  - update import link every time list updates
-*/
-
-/** @type {HTMLAnchorElement} */
-const exportLink = document.getElementById("export");
-
-exportLink.onclick = exportToJSON;
-
-/** @type {HTMLAnchorElement} */
-const importLink = document.getElementById("import");
-importLink.onclick = importFromJSON;

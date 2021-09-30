@@ -64,6 +64,8 @@ export class Row {
     task.className = "task";
     task.innerText = this.taskValue;
     task.dataset.key = this.taskIndex;
+    task.dataset.event = "done";
+    task.onclick = this.clickEventHandler;
 
     if (this.isDone) {
       task.style.textDecoration = "line-through";
@@ -74,13 +76,32 @@ export class Row {
     return { doneIcon, task, deleteIcon };
   }
 
+  /**
+   *
+   * @param {string} iconName Material Icon name
+   * @param {number?} index Optional indexing to set
+   * @returns {HTMLSpanElement}
+   */
   getMaterialIcon(iconName, index) {
+    return Row.getMaterialIcon(iconName, index, this.clickEventHandler);
+  }
+
+  /**
+   *
+   * @param {string} iconName
+   * @param {number?} index
+   * @param {GlobalEventHandlers?} eventHandler
+   * @returns {HTMLSpanElement}
+   */
+  static getMaterialIcon(iconName, index, eventHandler) {
     const icon = document.createElement("span");
     icon.className = "material-icons";
     icon.innerText = iconName;
-    icon.onclick = this.clickEventHandler;
-    icon.dataset.event = iconName;
     if (typeof index === "number") icon.dataset.key = index;
+    if (eventHandler) {
+      icon.onclick = eventHandler;
+      icon.dataset.event = iconName;
+    }
 
     return icon;
   }

@@ -5,23 +5,24 @@
 General:
 
 - Add comments (JSDoc)
-- Try to shorten main.js and isolate stuff into their own modules
+- ~~Try to shorten main.js and isolate stuff into their own modules~~
 - Finish this readme
-- Remove unused CSS selectors from main.css
+- ~~Remove unused CSS selectors from main.css~~
 - Make the app more visually appealing
 - Make the error box prettier and maybe dismissible?
 - Move import/export links somewhere else
-- Publish the site to somewhere
+- ~~Publish the site to somewhere~~
 - Test everything and every scenario
 - Test every scenario and everything. Twice.
 
 Features:
 
 - Give user the option to give task-list custom name
-- Make the site mobile friendly
+- ~~Make the site mobile friendly~~
 - Add option to reset everything
 - Add option to clear tasks that are done.
 
 ## What needs fixing
 
 - Validate input from import
+- ~~If user reads import warning for too long the browser refuses to open "add file" dialog.~~

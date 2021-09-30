@@ -18,14 +18,15 @@ h5 {
 #root {
   margin: auto;
   padding: 1em;
-  width: 480px;
+  min-width: 480px;
+  max-width: 640px;
 }
 
 #list-root {
   background-color: beige;
   padding: 1em;
   border: 1px solid gray;
-  border-radius: 1em;
+  border-radius: 0.2em;
   margin: 5px 0px;
 }
 #import-export {
@@ -45,14 +46,10 @@ div#input > span {
 }
 
 input {
-  font-size: 24px;
-  padding: 3px;
-  border-radius: 5px;
+  font-size: 1.5em;
+  padding: 0.1em;
+  border-radius: 0.2em;
 }
-
-/* input:focus {
-  background-color: lightblue;
-} */
 
 #add-button {
   width: 40px;
@@ -108,10 +105,7 @@ li:last-of-type {
 .material-icons[data-event="add"] {
   font-size: 36px;
 }
-/*
-.material-icons[data-event="done"] {
-}
-*/
+
 .material-icons[data-event="delete"] {
   color: red;
 }
@@ -127,4 +121,64 @@ li:last-of-type {
   border: 2px solid black;
   animation: fadeout 2s ease-out;
   animation-delay: 2s;
+}
+
+/* media queries for smaller screens */
+@media (max-width: 425px) {
+  input {
+    font-size: 1em;
+  }
+
+  #root {
+    padding: unset;
+    min-width: 375px;
+    max-width: max-content;
+  }
+
+  .task {
+    font-size: 1em;
+    padding-left: 0.5em;
+  }
+
+  .material-icons {
+    font-size: 1em;
+    opacity: 0.6;
+  }
+
+  #add-button {
+    width: 28px;
+    height: 28px;
+    padding: 0px;
+  }
+
+  .material-icons[data-event="add"] {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 375px) {
+  #root {
+    min-width: 360px;
+  }
+}
+
+@media (max-width: 360px) {
+  #root {
+    min-width: 320px;
+  }
+}
+
+@media (max-width: 320px) {
+  #root {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 319px) {
+  body {
+    font-size: 12px;
+  }
+  #root {
+    min-width: 250px;
+  }
 }

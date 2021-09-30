@@ -34,9 +34,12 @@ export class LocalStorage {
     }
   }
 
-  updateStorage() {
+  async updateStorage() {
     localStorage.setItem(this.listName, this.list);
     this.storage = JSON.parse(localStorage.getItem(this.listName));
+
+    const { renderTaskList } = await import("./main.js");
+    renderTaskList();
   }
 
   /**

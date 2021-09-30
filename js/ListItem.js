@@ -31,6 +31,6 @@ export class ListItem {
    * @returns {string}
    */
   toString() {
-    return JSON.stringify({ taskValue: this.taskValue, isDone: this.isDone });
+    return JSON.stringify(this.toJSON());
   }
 }
