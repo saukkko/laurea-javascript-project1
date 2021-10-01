@@ -11,7 +11,7 @@ export class ListItem {
   /**
    * @param {string} taskValue
    * @param {boolean} isDone
-   * @returns {Record<string,unknown>}
+   * @returns {Record<string, string|boolean>}
    */
   constructor(taskValue, isDone) {
     this.taskValue = taskValue;
@@ -21,7 +21,7 @@ export class ListItem {
   }
 
   /**
-   * @returns {Record<string,unknown>}
+   * @returns {Record<string,string|boolean>}
    */
   toJSON() {
     return { taskValue: this.taskValue, isDone: this.isDone };

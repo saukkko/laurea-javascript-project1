@@ -27,12 +27,12 @@ export const handleInputKeydown = (evt) => {
  */
 export const handleInputChange = (evt) => {
   const target = evt.target;
-  const maxLength = 15;
+  const maxLength = 50;
 
   if (target.value.length > maxLength) {
     target.value = target.value.slice(0, maxLength);
   }
-  // validateInput(target);
+  validateInput(target, true);
 };
 
 /**

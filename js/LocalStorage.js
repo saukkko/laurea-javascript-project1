@@ -5,7 +5,7 @@ import { ListItem } from "./ListItem.js";
 /**
  * @property list {List}
  * @property listName {string}
- * @property storage {Record<string,unknown>}
+ * @property storage {ListItem[]}
  * */
 export class LocalStorage {
   list;
@@ -71,8 +71,40 @@ export class LocalStorage {
   /**
    * @returns {string}
    */
-  get() {
+  toString() {
     this.updateStorage();
-    return this.list.toString();
+    return JSON.stringify(this.storage);
+  }
+
+  /**
+   * @returns {ListItem[]}
+   */
+  toJSON() {
+    this.updateStorage();
+    return this.storage;
+  }
+
+  reset() {
+    if (
+      confirm(
+        `This will reset your list named "${this.listName}"\n\nAre you sure?`
+      )
+    ) {
+      this.list = new List();
+      this.updateStorage();
+    }
+  }
+
+  removeDone() {
+    const newList = this.toJSON()
+      .map((o) => {
+        if (!o.isDone) return o;
+      })
+      .filter((d) => {
+        if (d) return d;
+      });
+
+    this.list = new List(newList);
+    this.updateStorage();
   }
 }

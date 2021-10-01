@@ -5,24 +5,25 @@
 General:
 
 - Add comments (JSDoc)
-- ~~Try to shorten main.js and isolate stuff into their own modules~~
 - Finish this readme
-- ~~Remove unused CSS selectors from main.css~~
 - Make the app more visually appealing
 - Make the error box prettier and maybe dismissible?
 - Move import/export links somewhere else
+- Test everything at least twice.
 - ~~Publish the site to somewhere~~
-- Test everything and every scenario
-- Test every scenario and everything. Twice.
+- ~~Remove unused CSS selectors from main.css~~
+- ~~Try to shorten main.js and isolate stuff into their own modules~~
 
 Features:
 
 - Give user the option to give task-list custom name
+- ~~Add option to reset everything~~
+- ~~Add option to clear tasks that are done.~~
 - ~~Make the site mobile friendly~~
-- Add option to reset everything
-- Add option to clear tasks that are done.
 
 ## What needs fixing
 
 - Validate input from import
+- toString() and toJSON() methods in List and LocalStorage are badly named. Need renaming.
+- Rename LocalStorage to something else, eg. TaskStorage to avoid confusion with built-in class Storage and localStorage() method.
 - ~~If user reads import warning for too long the browser refuses to open "add file" dialog.~~

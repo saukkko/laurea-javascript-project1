@@ -6,7 +6,7 @@ export class List {
 
   /**
    *
-   * @param {Record<string,unknown>[]?} list
+   * @param {ListItem[]?} list
    */
   constructor(list) {
     this.list = list ?? [];

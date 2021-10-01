@@ -3,7 +3,7 @@ import { storage } from "./main.js";
 import { List } from "./List.js";
 
 export const exportToJSON = (evt) => {
-  const text = storage.get();
+  const text = JSON.stringify(storage.toJSON(), null, 2);
   const fileName = storage.listName.concat(".json");
 
   const file = new File([text], fileName, { type: "application/json" });

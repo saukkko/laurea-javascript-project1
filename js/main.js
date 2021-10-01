@@ -69,9 +69,10 @@ const updateCounter = () => {
 
 /**
  * Function to check if the input is valid
- * @param {HTMLInputElement} element
+ * @param {HTMLInputElement} input
+ * @param {boolean?} validateOnly
  */
-export const validateInput = (element) => {
+export const validateInput = (input, validateOnly) => {
   const patterns = [
     {
       regex: /^$/,
@@ -93,19 +94,19 @@ export const validateInput = (element) => {
 
   setValidInput(true);
   patterns.forEach((p) => {
-    if (element.value.match(p.regex)) {
-      showError(p.errorMsg);
+    if (input.value.match(p.regex)) {
+      if (!validateOnly) showError(p.errorMsg);
       setValidInput(false);
     }
   });
 
   if (!isValidInput) {
-    element.style.borderColor = "red";
-    element.style.outlineColor = "red";
+    input.style.borderColor = "red";
+    input.style.outlineColor = "red";
   } else {
-    element.style.borderColor = "unset";
-    element.style.outlineColor = "unset";
-    hideError();
+    input.style.borderColor = "unset";
+    input.style.outlineColor = "unset";
+    if (!validateOnly) hideError();
   }
 };
 
@@ -145,9 +146,15 @@ const init = () => {
   renderTaskList();
   updateCounter();
 
+  // this is not pretty...
   const exportLink = document.getElementById("export");
   const importLink = document.getElementById("import");
+  const resetLink = document.getElementById("reset");
+  const removeDoneLink = document.getElementById("remove-done");
   exportLink.onclick = exportToJSON;
   importLink.onclick = importFromJSON;
+  resetLink.onclick = () => storage.reset();
+  removeDoneLink.onclick = () => storage.removeDone();
 };
+
 window.onload = init;
