@@ -32,7 +32,7 @@ export const handleInputChange = (evt) => {
   if (target.value.length > maxLength) {
     target.value = target.value.slice(0, maxLength);
   }
-  validateInput(target, true);
+  validateInput(target.value, true);
 };
 
 /**
@@ -49,7 +49,7 @@ export const handleClick = (evt) => {
 
     case "add":
       const input = document.getElementById("task-input");
-      validateInput(input);
+      validateInput(input.value);
 
       if (!isValidInput) {
         return;

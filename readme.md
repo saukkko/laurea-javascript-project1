@@ -23,7 +23,7 @@ Features:
 
 ## What needs fixing
 
-- Validate input from import
-- toString() and toJSON() methods in List and LocalStorage are badly named. Need renaming.
-- Rename LocalStorage to something else, eg. TaskStorage to avoid confusion with built-in class Storage and localStorage() method.
+- ~~Validate input from import~~ (partially implemented)
+- ~~toString() and toJSON() methods in List and LocalStorage are badly named. Need renaming.~~
+- ~~Rename LocalStorage to something else, eg. TaskStorage to avoid confusion with built-in class Storage and localStorage() method.~~
 - ~~If user reads import warning for too long the browser refuses to open "add file" dialog.~~

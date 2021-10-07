@@ -16,6 +16,7 @@ export class List {
    * @param {ListItem} listItem
    */
   addItem(listItem) {
+    listItem.taskValue = listItem.taskValue.trim();
     this.list.push(listItem);
   }
 

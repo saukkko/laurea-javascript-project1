@@ -13,22 +13,22 @@ export class Row {
   taskValue;
   taskIndex;
   isDone;
-  clickEventHandler;
+  eventHandler;
 
   /**
    *
    * @param taskValue {string}
    * @param isDone {boolean}
    * @param taskIndex {number}
-   * @param handleClick {MouseEvent}
+   * @param eventHandler {MouseEvent}
    * @returns {HTMLLIElement}
    */
-  constructor(taskValue, isDone, taskIndex, handleClick) {
+  constructor(taskValue, isDone, taskIndex, eventHandler) {
     this.li = document.createElement("li");
     this.taskValue = taskValue;
     this.taskIndex = taskIndex;
     this.isDone = isDone;
-    this.clickEventHandler = handleClick;
+    this.eventHandler = eventHandler;
 
     this.appendChildren();
 
@@ -65,7 +65,7 @@ export class Row {
     task.innerText = this.taskValue;
     task.dataset.key = this.taskIndex;
     task.dataset.event = "done";
-    task.onclick = this.clickEventHandler;
+    task.onclick = this.eventHandler;
 
     if (this.isDone) {
       task.style.textDecoration = "line-through";
@@ -83,7 +83,7 @@ export class Row {
    * @returns {HTMLSpanElement}
    */
   getMaterialIcon(iconName, index) {
-    return Row.getMaterialIcon(iconName, index, this.clickEventHandler);
+    return Row.getMaterialIcon(iconName, index, this.eventHandler);
   }
 
   /**

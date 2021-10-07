@@ -7,7 +7,7 @@ import { ListItem } from "./ListItem.js";
  * @property listName {string}
  * @property storage {ListItem[]}
  * */
-export class LocalStorage {
+export class TaskStorage {
   list;
   listName;
   storage;
@@ -35,10 +35,10 @@ export class LocalStorage {
   }
 
   async updateStorage() {
+    const { renderTaskList } = await import("./main.js");
+
     localStorage.setItem(this.listName, this.list);
     this.storage = JSON.parse(localStorage.getItem(this.listName));
-
-    const { renderTaskList } = await import("./main.js");
     renderTaskList();
   }
 
@@ -69,17 +69,9 @@ export class LocalStorage {
   }
 
   /**
-   * @returns {string}
-   */
-  toString() {
-    this.updateStorage();
-    return JSON.stringify(this.storage);
-  }
-
-  /**
    * @returns {ListItem[]}
    */
-  toJSON() {
+  get() {
     this.updateStorage();
     return this.storage;
   }
@@ -96,15 +88,14 @@ export class LocalStorage {
   }
 
   removeDone() {
-    const newList = this.toJSON()
-      .map((o) => {
-        if (!o.isDone) return o;
-      })
-      .filter((d) => {
-        if (d) return d;
-      });
-
-    this.list = new List(newList);
+    this.list = new List(this.storage.filter((x) => !x.isDone));
     this.updateStorage();
+  }
+
+  /**
+   * @returns {string}
+   */
+  toString() {
+    return JSON.stringify(this.get());
   }
 }

@@ -1,5 +1,5 @@
 "use strict";
-import { LocalStorage } from "./LocalStorage.js";
+import { TaskStorage } from "./TaskStorage.js";
 import { Row } from "./Row.js";
 import { exportToJSON, importFromJSON } from "./ImportExport.js";
 import {
@@ -8,8 +8,8 @@ import {
   handleInputKeydown,
 } from "./EventHandlers.js";
 
-export const storage = new LocalStorage();
-export var isValidInput = false;
+export const storage = new TaskStorage();
+export var isValidInput = false; // this could be error object?
 
 /**
  * Creates input and button elements for inserting tasks
@@ -69,13 +69,20 @@ const updateCounter = () => {
 
 /**
  * Function to check if the input is valid
- * @param {HTMLInputElement} input
+ * @param {string?} value
  * @param {boolean?} validateOnly
+ * @param {boolean?} throwOnError
  */
-export const validateInput = (input, validateOnly) => {
+export const validateInput = (value, validateOnly, throwOnError) => {
+  /** @type {HTMLInputElement} */
+  const input = document.getElementById("task-input");
+  value = value ?? input.value;
+
+  const err = new Error();
+
   const patterns = [
     {
-      regex: /^$/,
+      regex: /^$|^\s+$/,
       errorMsg: "Input can't be empty",
     },
     {
@@ -83,26 +90,28 @@ export const validateInput = (input, validateOnly) => {
       errorMsg: "Input must not contain only numbers",
     },
     {
-      regex: /(^\s+.*$)|(^.*\s+$)/,
-      errorMsg: "Input can't start or end with whitespace",
+      regex: /^(.{1,2})$/,
+      errorMsg: "Input must have at least three characters",
     },
     {
-      regex: /^(.{1,2})$/,
-      errorMsg: "Please type at least three characters",
+      regex: /^(?:.){50,}$/,
+      errorMsg: "Input can't exceed 50 characters",
     },
   ];
 
   setValidInput(true);
   patterns.forEach((p) => {
-    if (input.value.match(p.regex)) {
+    if (value.match(p.regex)) {
       if (!validateOnly) showError(p.errorMsg);
       setValidInput(false);
+      err.message = p.errorMsg;
     }
   });
 
   if (!isValidInput) {
     input.style.borderColor = "red";
     input.style.outlineColor = "red";
+    if (throwOnError) throw err;
   } else {
     input.style.borderColor = "unset";
     input.style.outlineColor = "unset";
@@ -115,7 +124,7 @@ export const validateInput = (input, validateOnly) => {
  * Shows red error box if user tries to add invalid input
  * @param {string} msg error message to print
  */
-const showError = (msg) => {
+export const showError = (msg) => {
   const err = document.getElementById("error");
   const span = document.createElement("span");
   err.className = "error-box";
@@ -124,7 +133,7 @@ const showError = (msg) => {
   err.replaceChildren(span);
 };
 
-const hideError = () => {
+export const hideError = () => {
   const err = document.getElementById("error");
   const span = err.lastChild;
 

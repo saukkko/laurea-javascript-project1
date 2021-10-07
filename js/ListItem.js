@@ -17,13 +17,6 @@ export class ListItem {
     this.taskValue = taskValue;
     this.isDone = isDone;
 
-    return this.toJSON();
-  }
-
-  /**
-   * @returns {Record<string,string|boolean>}
-   */
-  toJSON() {
     return { taskValue: this.taskValue, isDone: this.isDone };
   }
 
@@ -31,6 +24,6 @@ export class ListItem {
    * @returns {string}
    */
   toString() {
-    return JSON.stringify(this.toJSON());
+    return JSON.stringify(this);
   }
 }
