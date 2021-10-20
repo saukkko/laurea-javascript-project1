@@ -8,6 +8,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto&display=swap"
+      as="style"
+    />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      as="style"
+    />
+    <link rel="preload" href="./css/main.css" as="style" />
+    <link rel="preload" href="./js/main.js" as="script" crossorigin />
+    <link
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto&display=swap"
       rel="stylesheet"
     />
@@ -20,6 +32,10 @@
   </head>
   <body>
     <div id="root">
+      <div id="import-export">
+        <a id="import" href="#">import</a>
+        <a id="export" href="#">export</a>
+      </div>
       <div id="list-root">
         <h1>TODO</h1>
         <noscript>
@@ -29,11 +45,19 @@
         <div id="error"></div>
         <ul id="list"></ul>
         <p id="task-counter"></p>
-        <div>
-          <a id="import" href="#">import</a>
-          <a id="export" href="#">export</a>
-          <a id="reset" href="#">reset</a>
-          <a id="remove-done" href="#">remove done</a>
+        <div id="tools">
+          <a id="done-all" href="#">
+            <span class="material-icons">done_all</span>
+            Mark all done
+          </a>
+          <a id="remove-done" href="#">
+            <span class="material-icons">delete_sweep</span>
+            Delete done
+          </a>
+          <a id="reset" href="#">
+            <span class="material-icons">dangerous</span>
+            Reset
+          </a>
         </div>
       </div>
     </div>

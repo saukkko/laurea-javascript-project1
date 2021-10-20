@@ -1,5 +1,5 @@
 "use strict";
-import { hideError, showError, storage, validateInput } from "./main.js";
+import { storage, hideError, showError, validateInput } from "./main.js";
 import { List } from "./List.js";
 
 export const exportToJSON = (evt) => {
@@ -32,7 +32,7 @@ const handleDataLoad = (evt) => {
         const arr = JSON.parse(d);
         arr.forEach((x) => validateInput(x.taskValue, false, true)); // we need this to throw
       } catch (err) {
-        if (err && err instanceof Error) {
+        if (err instanceof Error) {
           console.error(err);
           if (err instanceof SyntaxError && err.message.includes("JSON"))
             showError("JSON parsing failed.");

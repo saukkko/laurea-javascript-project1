@@ -54,6 +54,21 @@ export const renderTaskList = () => {
   updateCounter();
 };
 
+const renderLinks = ()=> {
+  const exportLink = document.getElementById("export");
+  const importLink = document.getElementById("import");
+  const resetLink = document.getElementById("reset");
+  const removeDoneLink = document.getElementById("remove-done");
+  const doneAllLink = document.getElementById("done-all");
+
+  exportLink.onclick = exportToJSON;
+  importLink.onclick = importFromJSON;
+  resetLink.onclick = () => storage.reset();
+  removeDoneLink.onclick = () => storage.removeDone();
+  doneAllLink.onclick = () => storage.setAllDone();
+
+};
+
 const updateCounter = () => {
   const list = storage.list.toJSON();
   const count = list.length;
@@ -90,20 +105,20 @@ export const validateInput = (value, validateOnly, throwOnError) => {
       errorMsg: "Input must not contain only numbers",
     },
     {
-      regex: /^(.{1,2})$/,
+      regex: /^.{1,2}$/,
       errorMsg: "Input must have at least three characters",
     },
     {
-      regex: /^(?:.){50,}$/,
+      regex: /^.{51,}$/,
       errorMsg: "Input can't exceed 50 characters",
     },
   ];
 
-  setValidInput(true);
+  isValidInput = true;
   patterns.forEach((p) => {
-    if (value.match(p.regex)) {
+    if (value.trim().match(p.regex)) {
       if (!validateOnly) showError(p.errorMsg);
-      setValidInput(false);
+      isValidInput = false;
       err.message = p.errorMsg;
     }
   });
@@ -120,7 +135,6 @@ export const validateInput = (value, validateOnly, throwOnError) => {
 };
 
 /**
- * TODO: Make prettier
  * Shows red error box if user tries to add invalid input
  * @param {string} msg error message to print
  */
@@ -142,28 +156,11 @@ export const hideError = () => {
   err.removeAttribute("class");
 };
 
-/**
- * Function for controlling input validity
- * @param {boolean} value
- */
-const setValidInput = (value) => {
-  isValidInput = value;
-};
-
 const init = () => {
   renderTaskInput();
   renderTaskList();
+  renderLinks();
   updateCounter();
-
-  // this is not pretty...
-  const exportLink = document.getElementById("export");
-  const importLink = document.getElementById("import");
-  const resetLink = document.getElementById("reset");
-  const removeDoneLink = document.getElementById("remove-done");
-  exportLink.onclick = exportToJSON;
-  importLink.onclick = importFromJSON;
-  resetLink.onclick = () => storage.reset();
-  removeDoneLink.onclick = () => storage.removeDone();
 };
 
 window.onload = init;

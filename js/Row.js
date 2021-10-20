@@ -57,7 +57,7 @@ export class Row {
    * @returns Three different `<span>` elements
    */
   createChildren() {
-    let doneIcon = this.getMaterialIcon("done", this.taskIndex);
+    const doneIcon = this.getMaterialIcon("done", this.taskIndex);
     const deleteIcon = this.getMaterialIcon("delete", this.taskIndex);
     const task = document.createElement("span");
 
@@ -70,7 +70,6 @@ export class Row {
     if (this.isDone) {
       task.style.textDecoration = "line-through";
       task.style.opacity = "0.5";
-      doneIcon = this.getMaterialIcon("remove_done", this.taskIndex);
     }
 
     return { doneIcon, task, deleteIcon };

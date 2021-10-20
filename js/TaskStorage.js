@@ -12,26 +12,22 @@ export class TaskStorage {
   listName;
   storage;
 
-  /**
-   * @param {string?} listName
-   * @param {List?} list
-   */
-  constructor(listName, list) {
-    this.listName = listName ?? "todo";
-    list ? (this.list = list) : this.initialize();
-    this.updateStorage();
+  constructor() {
+    this.listName = "TODO";
+    this.initialize();
   }
 
   initialize() {
     this.storage = JSON.parse(localStorage.getItem(this.listName));
 
     if (!this.storage) {
-      let initList = new List();
-      localStorage.setItem(this.listName, initList.toString());
-      this.list = initList;
+      const initialList = new List();
+      localStorage.setItem(this.listName, initialList.toString());
+      this.list = initialList;
     } else {
       this.list = new List(this.storage);
     }
+    this.updateStorage();
   }
 
   async updateStorage() {
@@ -68,6 +64,10 @@ export class TaskStorage {
     this.updateStorage();
   }
 
+  setAllDone() {
+    this.list.toJSON().forEach((x,i) => this.set(i, new ListItem(x.taskValue,true)))
+  }
+
   /**
    * @returns {ListItem[]}
    */
@@ -77,10 +77,8 @@ export class TaskStorage {
   }
 
   reset() {
-    if (
-      confirm(
-        `This will reset your list named "${this.listName}"\n\nAre you sure?`
-      )
+    const msg = `This will clear all contents from your list.\n\nType "delete" to confirm.`
+    if (prompt(msg) === "delete"
     ) {
       this.list = new List();
       this.updateStorage();

@@ -15,8 +15,9 @@ export const handleInputKeydown = (evt) => {
   if (evt.key === "Enter") {
     const target = evt.target;
 
-    //addRow(target.value);
-    document.getElementById("add-button").firstChild.click();
+    document
+      .getElementById("add-button")
+      .firstChild.dispatchEvent(new MouseEvent("click"));
     target.value = "";
   }
 };
@@ -61,10 +62,6 @@ export const handleClick = (evt) => {
       break;
 
     case "done":
-      storage.markDone(dataset.key);
-      break;
-
-    case "remove_done":
       storage.markDone(dataset.key);
       break;
 
