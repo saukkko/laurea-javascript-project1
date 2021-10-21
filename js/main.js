@@ -8,18 +8,23 @@ import {
   handleInputKeydown,
 } from "./EventHandlers.js";
 
+// construct the TaskStorage class where all the magic happens
 export const storage = new TaskStorage();
-export var isValidInput = false; // this could be error object?
+
+// variable to keep track of the input validity, set to false at initialization
+export var isValidInput = false;
 
 /**
  * Creates input and button elements for inserting tasks
  */
 const renderTaskInput = () => {
+  // find where we will put the elements and create the children
   const div = document.getElementById("input");
   const input = document.createElement("input");
   const button = document.createElement("button");
   const addIcon = Row.getMaterialIcon("add", null, handleClick);
 
+  // add attributes and event handlers
   input.required = true;
   input.type = "text";
   input.id = "task-input";
@@ -29,6 +34,7 @@ const renderTaskInput = () => {
 
   button.id = "add-button";
 
+  // insert as children
   div.appendChild(input); // insert <input> as a child of div#input
   div.appendChild(button); // insert <button> as child of div#input, after <input>
   button.appendChild(addIcon); // insert icon inside <button> element
@@ -54,21 +60,30 @@ export const renderTaskList = () => {
   updateCounter();
 };
 
-const renderLinks = ()=> {
+/**
+ * Renders the extra tools
+ */
+const renderLinks = () => {
   const exportLink = document.getElementById("export");
   const importLink = document.getElementById("import");
   const resetLink = document.getElementById("reset");
   const removeDoneLink = document.getElementById("remove-done");
   const doneAllLink = document.getElementById("done-all");
 
+  // add some event handlers
   exportLink.onclick = exportToJSON;
   importLink.onclick = importFromJSON;
+
+  // and here we dont actually attach any handlers, but instead call the
+  // functions directly when the event is fired
   resetLink.onclick = () => storage.reset();
   removeDoneLink.onclick = () => storage.removeDone();
-  doneAllLink.onclick = () => storage.setAllDone();
-
+  doneAllLink.onclick = () => storage.markAllDone();
 };
 
+/**
+ * Function to update counter
+ */
 const updateCounter = () => {
   const list = storage.list.toJSON();
   const count = list.length;
@@ -84,17 +99,21 @@ const updateCounter = () => {
 
 /**
  * Function to check if the input is valid
- * @param {string?} value
- * @param {boolean?} validateOnly
- * @param {boolean?} throwOnError
+ * @param {string?} value value to validate
+ * @param {boolean?} validateOnly set true if we only want to validate and not print out any errors
+ * @param {boolean?} throwOnError set true if we want to throw an error if it occurs (will halt code execution if not caught properly)
  */
 export const validateInput = (value, validateOnly, throwOnError) => {
   /** @type {HTMLInputElement} */
   const input = document.getElementById("task-input");
+
+  // if value is not given in parameter or it's null or empty, read the value  from input
   value = value ?? input.value;
 
+  // create new error object
   const err = new Error();
 
+  // define patterns as RegExp when to catch errors and their error messages
   const patterns = [
     {
       regex: /^$|^\s+$/,
@@ -114,28 +133,44 @@ export const validateInput = (value, validateOnly, throwOnError) => {
     },
   ];
 
+  // set valid input to true
   isValidInput = true;
+
+  // iterate over our patterns...
   patterns.forEach((p) => {
+    // ...check if our value matches the pattern...
     if (value.trim().match(p.regex)) {
+      // ...if we are not validating only, print the error in error-box
       if (!validateOnly) showError(p.errorMsg);
+
+      // set valid input to false
       isValidInput = false;
+
+      // set error objects message to matching pattern error message
       err.message = p.errorMsg;
     }
   });
 
+  // if the input is not valid...
   if (!isValidInput) {
+    // ...style input border...
     input.style.borderColor = "red";
     input.style.outlineColor = "red";
+
+    // ...and if we are throwing on error, throw it
     if (throwOnError) throw err;
   } else {
+    // if the input is valid, unset any previous styles set to input
     input.style.borderColor = "unset";
     input.style.outlineColor = "unset";
+
+    // if we are not only validating, hide the previous errors
     if (!validateOnly) hideError();
   }
 };
 
 /**
- * Shows red error box if user tries to add invalid input
+ * Shows red error-box if user tries to add invalid input
  * @param {string} msg error message to print
  */
 export const showError = (msg) => {
@@ -147,6 +182,9 @@ export const showError = (msg) => {
   err.replaceChildren(span);
 };
 
+/**
+ * hides (removes) the error-box
+ */
 export const hideError = () => {
   const err = document.getElementById("error");
   const span = err.lastChild;
@@ -156,6 +194,9 @@ export const hideError = () => {
   err.removeAttribute("class");
 };
 
+/**
+ * Initialize the page so it will look correct during first load.
+ */
 const init = () => {
   renderTaskInput();
   renderTaskList();
@@ -163,4 +204,5 @@ const init = () => {
   updateCounter();
 };
 
+// call initializaion only after the window is fully loaded
 window.onload = init;

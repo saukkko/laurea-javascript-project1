@@ -1,6 +1,9 @@
 "use strict";
 
 /**
+ * Simple class that only holds information of the tasks name and state. This
+ * could be "downgraded" to simple object instead of being a class
+ *
  * @property taskValue {string}
  * @property isDone {boolean}
  */

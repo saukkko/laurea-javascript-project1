@@ -3,7 +3,7 @@
 body {
   font-family: Roboto, sans-serif;
   background-color: wheat;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 h1 {
@@ -58,8 +58,8 @@ input {
 }
 
 #add-button {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   padding: 0;
 }
 
@@ -99,7 +99,7 @@ li:last-of-type {
 /* icon styling */
 
 .material-icons {
-  font-size: 30px;
+  font-size: 36px;
   flex: 1;
   cursor: pointer;
   opacity: 0.3;
@@ -109,11 +109,12 @@ li:last-of-type {
   opacity: 1;
 }
 
-.material-icons[data-event="add"] {
-  font-size: 36px;
+#reset > .material-icons,
+#remove-done > .material-icons {
+  color: red;
 }
 
-.material-icons[data-event="delete"] {
+.material-icons[data-action="delete"] {
   color: red;
 }
 
@@ -162,13 +163,13 @@ li:last-of-type {
   }
 
   .material-icons {
-    font-size: 1em;
-    opacity: 0.6;
+    font-size: 27px;
+    opacity: 0.8;
   }
 
   #add-button {
-    width: 28px;
-    height: 28px;
+    width: 31px;
+    height: 31px;
     padding: 0;
   }
 
@@ -197,7 +198,7 @@ li:last-of-type {
 
 @media (max-width: 319px) {
   body {
-    font-size: 12px;
+    font-size: 16px;
   }
   #root {
     min-width: 250px;

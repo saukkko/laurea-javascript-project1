@@ -1,6 +1,8 @@
 "use strict";
 
 /**
+ * This class creates new `<li>` element for the `<ul>` element.
+ *
  * @class Row
  * @property li {HTMLLIElement}
  * @property taskValue {string}
@@ -46,7 +48,10 @@ export class Row {
    * ```
    */
   appendChildren() {
-    const { doneIcon, task, deleteIcon } = this.createChildren(); // destructor
+    // destruct children as variables
+    const { doneIcon, task, deleteIcon } = this.createChildren();
+
+    // append li-element with children
     this.li.appendChild(doneIcon);
     this.li.appendChild(task);
     this.li.appendChild(deleteIcon);
@@ -57,25 +62,39 @@ export class Row {
    * @returns Three different `<span>` elements
    */
   createChildren() {
+    // create the elements
     const doneIcon = this.getMaterialIcon("done", this.taskIndex);
     const deleteIcon = this.getMaterialIcon("delete", this.taskIndex);
     const task = document.createElement("span");
 
+    // set some properties for the `<span>` that holds the task information
     task.className = "task";
     task.innerText = this.taskValue;
-    task.dataset.key = this.taskIndex;
-    task.dataset.event = "done";
+
+    // adds data-index attribute
+    task.dataset.index = this.taskIndex;
+
+    // adds data-action attribute
+    task.dataset.action = "done";
+
+    // listen onclick events
     task.onclick = this.eventHandler;
 
+    // if the task is done...
     if (this.isDone) {
+      // ...decorate it with line-through...
       task.style.textDecoration = "line-through";
+
+      // ...and make it more opaque
       task.style.opacity = "0.5";
     }
 
+    // return the children as object
     return { doneIcon, task, deleteIcon };
   }
 
   /**
+   * Calls static getMaterialIcon method with instance variable this.eventHandler
    *
    * @param {string} iconName Material Icon name
    * @param {number?} index Optional indexing to set
@@ -86,6 +105,9 @@ export class Row {
   }
 
   /**
+   * Method to create some fancy icons.
+   *
+   * @see https://fonts.google.com/icons?selected=Material+Icons
    *
    * @param {string} iconName
    * @param {number?} index
@@ -93,15 +115,28 @@ export class Row {
    * @returns {HTMLSpanElement}
    */
   static getMaterialIcon(iconName, index, eventHandler) {
+    // create new span element
     const icon = document.createElement("span");
+
+    // set the class name as material-icons for them to work
     icon.className = "material-icons";
+
+    // set the inner text to icon name to draw correct icon
     icon.innerText = iconName;
-    if (typeof index === "number") icon.dataset.key = index;
+
+    // check if we have index parameter set and if it's actually a number, and set data-index to it
+    if (typeof index === "number") icon.dataset.index = index;
+
+    // check if we have event handler parameter...
     if (eventHandler) {
+      // ... and attach it...
       icon.onclick = eventHandler;
-      icon.dataset.event = iconName;
+
+      // ...and specify it's action name with the icon name
+      icon.dataset.action = iconName;
     }
 
+    // return the span element (icon)
     return icon;
   }
 }

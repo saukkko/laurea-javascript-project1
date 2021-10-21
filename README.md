@@ -6,9 +6,9 @@ This app is published at: https://elegant-tesla-69eaab.netlify.app/
 
 General:
 
-- Add comments (JSDoc)
-- Finish this readme
-- Test everything at least twice.
+- ~~Add comments (JSDoc)~~
+- ~~Finish this readme~~
+- ~~Test everything at least twice.~~
 - ~~Move import/export links somewhere else~~
 - ~~Publish the site to somewhere~~
 - ~~Remove unused CSS selectors from main.css~~
